@@ -1,7 +1,5 @@
 ## device_list
 
----
-
 ####To Use Device List
 
 **clone the repo somewhere special**
