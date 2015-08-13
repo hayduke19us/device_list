@@ -11,8 +11,10 @@ end
 
 def intro_message
   %[
-     To find out your device UID 
-     'instruments -d devices'
+     To find out your device UID
+     'instruments -s devices'
+
+     Or `note_device devices`
    ]
 end
 
@@ -31,7 +33,7 @@ def get_name
   puts "Enter a Device name"
   border
   name = gets.chomp
-  @device.name = name unless present?(name)
+  @device.name = name if present?(name)
 end
 
 def create_file
@@ -57,25 +59,13 @@ def write_uid_and_name
   end
 end
 
-def intro_message
-  puts 'hello my dear'
-end
-
-def outro_message
-  puts 'good by sir'
-end
-
-def the_whole_package
-  intro_message
-  get_uid
-  get_name
-  write_uid_and_name
-  outro_message
-end
-
 def list_devices
   lines = File.readlines(@device.path)
-  lines.each { |l| puts l }
+  lines.each { |l| puts "\t#{ l }" }
+end
+
+def list_system_devices
+  puts `sudo instruments -s devices`
 end
 
 def push_device_list
@@ -85,7 +75,9 @@ def push_device_list
   if Dir.pwd.match(dir_path)
     `git push origin master`
   else
-    puts "We can't find the */note_device Directory"
+    puts %[
+            We can't find the */note_device Directory
+          ]
   end
 end
 
@@ -95,6 +87,8 @@ def define_option
       list_devices
     when @device.option.match(/push/)
       push_device_list
+    when @device.option.match(/devices/)
+      list_system_devices
     else
       puts "Well we don't know what you mean, your option sucks list or push that's it"
   end
@@ -104,14 +98,21 @@ def decide_your_path
   if @device.option
     define_option
   else
-    the_whole_package
+    puts intro_message
+    get_uid
+    get_name
+    write_uid_and_name
   end
 end
 
 begin
 
   if File.exists? @device.path
-    puts 'We found the file we were looking for'
+    puts  %[
+            We found the file we were looking for at #{@device.path}
+            This is where we store your device id's
+           ]
+           border
   else
     create_file
   end
@@ -123,5 +124,8 @@ rescue => e
 ensure
 
   decide_your_path
+  10.times { sleep 0.04; puts '.'}
+  20.times { sleep 0.04; print '.'}
+  puts ".-> good by sir"
 
 end

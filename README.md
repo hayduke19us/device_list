@@ -21,6 +21,10 @@ repo in the */Paradigm* directory
 
 **Options**
 
+				device_list devices
+
+Will list the local devices and their UID'
+
 				device_list list
 
 Will list the devices in the formatted text file *device_list.txt*
@@ -29,7 +33,6 @@ Will list the devices in the formatted text file *device_list.txt*
 				device_list push
 
 Will push the repo up and update the device list
-
 
 				device_list 
 
