@@ -4,7 +4,7 @@
 
 ####To Use Device List
 
-**clone the report some where special**
+**clone the repo somewhere special**
 
 			git clone https://github.com/hayduke19us/device_list.git
 
@@ -21,22 +21,25 @@ repo in the */Paradigm* directory
 
 **Options**
 
-				device_list devices
+				note_device devices
 
 Will list the local devices and their UID'
 
-				device_list list
+				note_device list
 
 Will list the devices in the formatted text file *device_list.txt*
 
-
-				device_list push
+				note_device push
 
 Will push the repo up and update the device list
 
-				device_list 
+				note_device
 
-Will give you two fields, a Device UID and a Device name.
+Will give you two fields, a Device UID and a Device name. These will be saved in
+*device_list.txt* in the following format:
+
+Device UID	Device Name 
+888888888   Frank
 
 This is used to register devices
 [Here](https://developer.apple.com/account/ios/device/deviceCreate.action)
