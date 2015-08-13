@@ -1,5 +1,9 @@
 ## device_list
 
+###WORK IN PROGRESS
+
+**We need encryption**
+
 ####To Use Device List
 
 **clone the repo somewhere special**
