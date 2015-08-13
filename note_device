@@ -79,6 +79,14 @@ def list_devices
 end
 
 def push_device_list
+  full_path = `find $HOME/* -name 'note_device'`
+  dir_path = File.dirname(full_path)
+  Dir.chdir(dir_path)
+  if Dir.pwd.match(dir_path)
+    `git push origin master`
+  else
+    puts "We can't find the */note_device Directory"
+  end
 end
 
 def define_option
