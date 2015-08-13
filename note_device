@@ -73,6 +73,8 @@ def push_device_list
   dir_path = File.dirname(full_path)
   Dir.chdir(dir_path)
   if Dir.pwd.match(dir_path)
+    `git add device_list.txt`
+    `git commit -m 'update device uid list'`
     `git push origin master`
   else
     puts %[
