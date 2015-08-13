@@ -38,7 +38,7 @@ end
 
 def create_file
   file = File.open(@device.path, 'w+')
-  file.write("Device ID\t Device Name")
+  file.puts("Device ID\t Device Name")
   file.close
   puts "So we created you a file at #{Dir.pwd + @device.path}"
   puts "Headers Device ID \t Device Name"
@@ -51,7 +51,7 @@ end
 def write_uid_and_name
   if @device.uid && @device.name
     File.open(@device.path, 'a') do |f|
-      f.puts formatted_table
+      f.puts "#{@device.uid}\t#{@device.name}"
       f.close
     end
   else
