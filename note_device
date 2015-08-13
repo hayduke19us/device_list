@@ -1,0 +1,119 @@
+#!/usr/bin/env ruby
+
+Device = Struct.new(:name, :uid, :path, :option)
+@device = Device.new()
+@device.path = 'device_list.txt'
+@device.option = ARGV.first
+
+def border
+  puts "=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
+end
+
+def intro_message
+  %[
+     To find out your device UID 
+     'instruments -d devices'
+   ]
+end
+
+def present? string
+  string.size > 0 && !string.nil? ? true : false
+end
+
+def get_uid
+  puts "Enter a Device UID"
+  border
+  uid = gets.chomp
+  @device.uid = uid if present?(uid)
+end
+
+def get_name
+  puts "Enter a Device name"
+  border
+  name = gets.chomp
+  @device.name = name unless present?(name)
+end
+
+def create_file
+  file = File.open(@device.path, 'w+')
+  file.write("Device ID\t Device Name")
+  file.close
+  puts "So we created you a file at #{Dir.pwd + @device.path}"
+  puts "Headers Device ID \t Device Name"
+end
+
+def formatted_table
+  "#{@device.uid}\t#{@device.name}"
+end
+
+def write_uid_and_name
+  if @device.uid && @device.name
+    File.open(@device.path, 'a') do |f|
+      f.puts formatted_table
+      f.close
+    end
+  else
+    puts "Sorry you fucked up"
+  end
+end
+
+def intro_message
+  puts 'hello my dear'
+end
+
+def outro_message
+  puts 'good by sir'
+end
+
+def the_whole_package
+  intro_message
+  get_uid
+  get_name
+  write_uid_and_name
+  outro_message
+end
+
+def list_devices
+  lines = File.readlines(@device.path)
+  lines.each { |l| puts l }
+end
+
+def push_device_list
+end
+
+def define_option
+  case
+    when @device.option.match(/list/)
+      list_devices
+    when @device.option.match(/push/)
+      push_device_list
+    else
+      puts "Well we don't know what you mean, your option sucks list or push that's it"
+  end
+end
+
+def decide_your_path
+  if @device.option
+    define_option
+  else
+    the_whole_package
+  end
+end
+
+begin
+
+  if File.exists? @device.path
+    puts 'We found the file we were looking for'
+  else
+    create_file
+  end
+
+rescue => e
+
+  e.message
+
+ensure
+
+  decide_your_path
+
+end
